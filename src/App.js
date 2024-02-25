@@ -1,23 +1,20 @@
-import logo from './logo.svg';
-import './App.css';
-
+import { useDispatch, useSelector } from "react-redux";
+import "./App.css";
+import { Pagination } from "./components/pagination/Pagination";
+import { getItems } from "./redux/slices/productsApiSlice";
 function App() {
+  const dispatch = useDispatch();
+  const err = useSelector((state) => state.items.error);
+  console.log(err)
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      <p>hello world</p>
+      {err ? (
+        <p>loading...</p>
+      ) : (
+        <button onClick={() => dispatch(getItems())}>жми</button>
+      )}
+      <Pagination />
     </div>
   );
 }
