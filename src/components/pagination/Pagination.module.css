@@ -1,7 +1,7 @@
 .pagination{
     margin: 0 auto;
     display: flex;
-    justify-content: center;
+    justify-content: space-around;
 }
 
 .pagination div{
@@ -42,8 +42,8 @@
 }
 
 .vector_img{
-    width: 32px;
-    height: 32px;
+    width: 100px;
+    height: 50px;
     border-radius: 8px;
     border: 1px solid #5458EA;
     cursor: pointer;

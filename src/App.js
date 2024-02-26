@@ -1,19 +1,13 @@
-import { useDispatch, useSelector } from "react-redux";
 import "./App.css";
 import { Pagination } from "./components/pagination/Pagination";
-import { getItems } from "./redux/slices/productsApiSlice";
+import Items from "./components/items/Items";
+import { useDispatch, useSelector } from "react-redux";
+
 function App() {
-  const dispatch = useDispatch();
-  const err = useSelector((state) => state.items.error);
-  console.log(err)
+
   return (
-    <div className="App">
-      <p>hello world</p>
-      {err ? (
-        <p>loading...</p>
-      ) : (
-        <button onClick={() => dispatch(getItems())}>жми</button>
-      )}
+    <div className="container">
+      <Items />
       <Pagination />
     </div>
   );

@@ -1,25 +1,38 @@
-import React from "react";
-import { useDispatch } from "react-redux";
+import React, { useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
 import s from "./Pagination.module.css";
 import { arrow_left, arrow_right } from "../../Images";
+import { getNextPageItems, getPrevPageItems } from "../../redux/slices/itemsApiSlice";
 
-export const Pagination = ({ page, take, previous, next, takeTwo,count }) => {
+export const Pagination = () => {
+  const err = useSelector((state) => state.items.error);
   const dispatch = useDispatch();
+  const [totalCount, setTotalCount] = useState(0)
 
-  let totalPages = Math.ceil(count / 32) 
-  const pagination = (next) => {
-    dispatch(take(next));
+  const paginationNext = () => {
+    let newValue = totalCount + 50;
+    setTotalCount(newValue)
+    let data = {data:{action: "get_ids", params: { offset:newValue, limit: 50 }}} 
+    dispatch(getNextPageItems({...data}));
+
+  };
+  const paginationPrev = () => {
+    let newValue = totalCount - 50;
+    setTotalCount(newValue)
+    let data = {data:{action: "get_ids", params: { offset:newValue, limit: 50 }}} 
+    dispatch(getPrevPageItems({...data}));
+ 
   };
 
   return (
     <div className={s.pagination}>
-      <div
-        className={previous !== null ? s.vector_img : s.unactive}
-        onClick={() => pagination(previous)}
+      <button
+        className={s.vector_img}
+        onClick={() => paginationPrev()}
       >
         <img src={arrow_left} alt="" />
-      </div>
-      {count !== undefined?[...Array(totalPages)].map((_, index) => (
+      </button>
+      {/* {count !== undefined?[...Array(totalPages)].map((_, index) => (
         <div
           key={index}
           className={page===index+1?s.pagination_box:s.pagination_unactive}
@@ -27,13 +40,14 @@ export const Pagination = ({ page, take, previous, next, takeTwo,count }) => {
         >
           {index + 1}
         </div>
-      )):<></>}
-      <div
-        className={next !== null ? s.vector_img : s.unactive}
-        onClick={() => pagination(next)}
+      )):<></>} */}
+      <button
+        className={s.vector_img}
+        onClick={() => paginationNext()}
+        disabled={err}
       >
         <img src={arrow_right} alt="" />
-      </div>
+      </button>
     </div>
   );
 };
