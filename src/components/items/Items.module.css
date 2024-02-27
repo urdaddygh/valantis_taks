@@ -1,9 +1,10 @@
-.container{
+.container {
     display: flex;
     flex-wrap: wrap;
     justify-content: space-between;
 }
-.cont{
+
+.cont {
     background-color: #FFFF;
     border-radius: 12px;
     padding: 6px;
@@ -12,4 +13,14 @@
     min-height: 240px;
     min-width: 265px;
     flex: 17%;
+}
+
+.cont p {
+    margin-bottom: 20px;
+}
+
+.cont:hover {
+    -webkit-transform: scale(1.05);
+    -ms-transform: scale(1.05);
+    transform: scale(1.05);
 }

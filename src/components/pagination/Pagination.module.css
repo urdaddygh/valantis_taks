@@ -1,13 +1,14 @@
-.pagination{
+.pagination {
     margin: 0 auto;
     display: flex;
     justify-content: space-around;
 }
 
-.pagination div{
+.pagination div {
     margin-right: 8px;
 }
-.pagination_box{
+
+.pagination_box {
     width: 32px;
     height: 32px;
     border-radius: 8px;
@@ -22,14 +23,15 @@
     font-weight: bold;
     cursor: pointer;
 }
-.pagination_unactive{
+
+.pagination_unactive {
     width: 32px;
     height: 32px;
     border-radius: 8px;
     font-weight: 500;
     font-size: 14px;
     color: #494949;
-    background:#C0C0C0;
+    background: #C0C0C0;
     text-align: center;
     align-items: center;
     display: flex;
@@ -37,11 +39,12 @@
     font-weight: bold;
     cursor: pointer;
 }
+
 .pagination_box:active {
     background: #5458EA;
 }
 
-.vector_img{
+.vector_img {
     width: 100px;
     height: 50px;
     border-radius: 8px;
@@ -51,11 +54,13 @@
     align-items: center;
     justify-content: center;
 }
-.opacity{
+
+.opacity {
     opacity: 30%;
     pointer-events: none;
 }
-.unactive{
+
+.unactive {
     visibility: hidden;
     width: 32px;
 }

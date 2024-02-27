@@ -9,14 +9,15 @@ const fetchAPI = axios.create({
   baseURL: "https://api.valantis.store:41000/",
   headers: {
     "Content-type": "application/json",
-    "X-Auth": "cd0bfbcb48b87cbb908ce771120bb507",
+    "X-Auth": md,
   },
 });
 
 export const requests = {
   getIds: (data) => fetchAPI.post("", data),
-  getFields:()=>fetchAPI.post("", {action: "get_fields", params: {field:"price"}}),
-  getItemsByPrice:()=>fetchAPI.post("", {action: "filter", params: {price:17500}}),
+  getFields: () =>
+    fetchAPI.post("", { action: "get_fields", params: { field: "price" } }),
+  getItemsByFilter: (data) => fetchAPI.post("", data),
   getItems: (data) =>
     fetchAPI.post("", { action: "get_items", params: { ids: [...data] } }),
 };

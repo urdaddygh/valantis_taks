@@ -8,66 +8,104 @@ const initialState = {
 export const getItems = createAsyncThunk(
   "getItemsReducer/getItems",
   async (data) => {
+    console.log(data);
     try {
-      const res = await requests.getIds(data);
+      const res = await requests.getIds(data.data);
       const response = await requests.getItems(res.data.result);
-      return response.data.result;
+      const filteredArr = response.data.result.filter(
+        (product, index, self) =>
+          index === self.findIndex((t) => t.id === product.id)
+      );
+      //   while(filteredArr.length < 50){
+
+      //     const newProduct = await requests.getItems()
+
+      //   }
+
+      // console.log(filteredArr, "фильтрованный");
+      // console.log(response.data.result, "не фильтрованный");
+      return filteredArr;
     } catch (err) {
+      data.showToastMessage("Ошибка! Попробуйте еще раз");
       throw new Error(console.log(err));
     }
   }
 );
-export const getItemsByPrice = createAsyncThunk(
-  "getItemsReducer/getItemsByPrice",
-  async () => {
-    try {
-      const res = await requests.getItemsByPrice();
-      console.log(res.data)
-      // const response = await requests.getItems(res.data.result);
-      return res.data;
-    } catch (err) {
-      throw new Error(console.log(err));
-    }
-  }
-);
-export const getFields = createAsyncThunk(
-  "getItemsReducer/getFields",
+
+export const getItemsByFilter = createAsyncThunk(
+  "getItemsReducer/getItemsByFilter",
   async (data) => {
     try {
-      const res = await requests.getFields(data);
-      // console.log(res.data)
-      return res.data;
+      const res = await requests.getItemsByFilter(data.data);
+      const response = await requests.getItems(res.data.result);
+      const filteredArr = response.data.result.filter(
+        (product, index, self) =>
+          index === self.findIndex((t) => t.id === product.id)
+      );
+      // console.log(filteredArr, "фильтрованный");
+      // console.log(response.data.result, "не фильтрованный");
+      return filteredArr;
     } catch (err) {
+      data.showToastMessage("Ошибка! Попробуйте еще раз");
       throw new Error(console.log(err));
     }
   }
 );
+
 export const getNextPageItems = createAsyncThunk(
   "getItemsReducer/getNextPageItems",
   async (data) => {
     try {
-      // data.stateCountPlus()
       const res = await requests.getIds(data.data);
       const response = await requests.getItems(res.data.result);
-      return response.data.result;
+      data.setTotalCount(data.data.params.offset);
+      const filteredArr = response.data.result.filter(
+        (product, index, self) =>
+          index === self.findIndex((t) => t.id === product.id)
+      );
+      // console.log(filteredArr, "фильтрованный");
+      // console.log(response.data.result, "не фильтрованный");
+      return filteredArr;
     } catch (err) {
+      data.showToastMessage("Ошибка! Попробуйте еще раз");
       throw new Error(console.log(err));
     }
   }
 );
+
 export const getPrevPageItems = createAsyncThunk(
   "getItemsReducer/getPrevPageItems",
   async (data) => {
     try {
-      // data.stateCountMinus()
       const res = await requests.getIds(data.data);
       const response = await requests.getItems(res.data.result);
-      return response.data.result;
+      data.setTotalCount(data.data.params.offset);
+      const filteredArr = response.data.result.filter(
+        (product, index, self) =>
+          index === self.findIndex((t) => t.id === product.id)
+      );
+      // console.log(filteredArr, "фильтрованный");
+      // console.log(response.data.result, "не фильтрованный");
+      return filteredArr;
     } catch (err) {
+      data.showToastMessage("Ошибка! Попробуйте еще раз");
       throw new Error(console.log(err));
     }
   }
 );
+
+// export const getFields = createAsyncThunk(
+//   "getItemsReducer/getFields",
+//   async (data) => {
+//     try {
+//       const res = await requests.getFields(data);
+//       return res.data;
+//     } catch (err) {
+//       throw new Error(console.log(err));
+//     }
+//   }
+// );
+
 const itemApiSlice = createSlice({
   name: "getItemsReducer",
   initialState,
@@ -102,6 +140,16 @@ const itemApiSlice = createSlice({
         state.items = action.payload;
       })
       .addCase(getPrevPageItems.rejected, (state) => {
+        state.error = false;
+      })
+      .addCase(getItemsByFilter.pending, (state) => {
+        state.error = true;
+      })
+      .addCase(getItemsByFilter.fulfilled, (state, action) => {
+        state.error = false;
+        state.items = action.payload;
+      })
+      .addCase(getItemsByFilter.rejected, (state) => {
         state.error = false;
       });
   },
