@@ -84,6 +84,7 @@ function App() {
       <div className="list">
         <p>Cписок товаров</p>
       </div>
+      {/* из-за фильтрации дубликатов id на первой странице оказывается 49 товаров вместо 50  */}
       <Items />
       {items.length > 48 && items.length < 51 && <Pagination />}
     </div>
