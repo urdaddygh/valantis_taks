@@ -26,7 +26,7 @@ export const getItems = createAsyncThunk(
       // console.log(response.data.result, "не фильтрованный");
       return filteredArr;
     } catch (err) {
-      data.showToastMessage("Ошибка! Попробуйте еще раз");
+      data.showToastMessage("Секундочку, идет загрузка...");
       throw new Error(console.log(err));
     }
   }
@@ -46,7 +46,7 @@ export const getItemsByFilter = createAsyncThunk(
       // console.log(response.data.result, "не фильтрованный");
       return filteredArr;
     } catch (err) {
-      data.showToastMessage("Ошибка! Попробуйте еще раз");
+      data.showToastMessage("Проблемы с интернетом! Попробуйте еще раз");
       throw new Error(console.log(err));
     }
   }
@@ -93,18 +93,6 @@ export const getPrevPageItems = createAsyncThunk(
     }
   }
 );
-
-// export const getFields = createAsyncThunk(
-//   "getItemsReducer/getFields",
-//   async (data) => {
-//     try {
-//       const res = await requests.getFields(data);
-//       return res.data;
-//     } catch (err) {
-//       throw new Error(console.log(err));
-//     }
-//   }
-// );
 
 const itemApiSlice = createSlice({
   name: "getItemsReducer",

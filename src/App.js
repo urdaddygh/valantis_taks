@@ -5,7 +5,7 @@ import { useDispatch, useSelector } from "react-redux";
 import Filter from "./components/filter/Filter";
 import { useEffect, useState } from "react";
 import { useDebounce } from "./hooks/useDebounce";
-import { getItemsByFilter } from "./redux/slices/itemsApiSlice";
+import { getItems, getItemsByFilter } from "./redux/slices/itemsApiSlice";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
@@ -33,7 +33,14 @@ function App() {
   const searchByFilter = () => {
     if (optionValue === "" && keyWords !== "") {
       showToastMessage("Пожалуйста выберите категорию для фильтра");
-    } else if (optionValue === "price") {
+    }else if(keyWords === ""){
+      let data = {
+        showToastMessage,
+        data: { action: "get_ids", params: { offset: 0, limit: 50 } },
+      };
+      dispatch(getItems(data));
+    } 
+    else if (optionValue === "price") {
       let data = {
         showToastMessage,
         data: {

@@ -10,7 +10,7 @@ function Items() {
   const items = useSelector((state) => state.items.items);
 
   const showToastMessage = (data) => {
-    toast.error(data, {
+    toast.warn(data, {
       position: "top-center",
       autoClose: 5000,
       hideProgressBar: false,
@@ -21,7 +21,7 @@ function Items() {
       theme: "light",
     });
   };
-
+  
   useEffect(() => {
     let data = {
       showToastMessage,
